@@ -18,45 +18,31 @@ def inicio():
         print('5 - Sair')
         print('-' * 30)
         while True:
-            r = 394394398
             resp = input('Escolha uma opção: ')
-            while True:
-                if resp.isnumeric():
-                    resp = int(resp)
-                elif resp.isalpha() or resp.isalnum():
-                    print('\033[31mERRO. Escreva em forma numérica.\033[m')
-                    break
-                if resp == 2:
+            if resp.isnumeric():
+                resp = int(resp)
+                if resp > 5 or resp < 1:
+                    print(f'\033[31m({resp}) não existe no menu de opções.\033[m')
+                elif resp == 2:
                     if len(listataf) == 0:
-                        print('\033[31mVocê não tem nenhuma tarefa cadastrada. Tente novamente.\033[m') 
-                        break
+                        print('\033[31mVocê não tem nenhuma tarefa cadastrada. Tente novamente.\033[m')
                     else:
-                        r = int(resp)
                         break
                 elif resp == 3:
                     if len(listataf) == 0:
-                        print('\033[31mVocê não tem nenhuma tarefa cadastrada. Tente novamente.\033[m') 
-                        break
+                        print('\033[31mVocê não tem nenhuma tarefa cadastrada. Tente novamente.\033[m')
                     else:
-                        r = int(resp)
                         break
                 elif resp == 4:
                     if len(listataf) == 0:
-                        print('\033[31mVocê não tem nenhuma tarefa cadastrada. Tente novamente.\033[m') 
-                        break
+                        print('\033[31mVocê não tem nenhuma tarefa cadastrada. Tente novamente.\033[m')
                     else:
-                        r = int(resp)
                         break
-                elif resp > 5 or resp < 1:
-                    print(f'\033[31m({resp}) não existe no menu de opções. Tente novamente.\033[m')
-                    break
                 else:
-                    r = int(resp)
                     break
-            if r == resp:
-                break
             else:
-                r = 0
+                print('\033[31mEscreva em forma numérica.\033[m')
+
             
         if resp == 1:
             adicionar()
@@ -90,12 +76,32 @@ def atualizar():
         for c in range(0, len(listataf)):
             print(f'Tarefa {c}: {listataf[c]['tarefa']} | Status: {listataf[c]['status']}')
         print('-' * 30)
-        atua = int(input('Deseja atualizar qual tarefa? '))
+        while True:
+            atua = input('Deseja atualizar qual tarefa? ')
+            if atua.isnumeric():
+                atua = int(atua)
+                if atua > (len(listataf) - 1) or atua < 0:
+                    print(f'\033[31mNão tem nenhuma tarefa com o número ({atua}) cadastrada. Tente novamente.\033[m')
+                else:
+                    break
+            else:
+                print('\033[31mEscreva em forma numérica.\033[m')
+
         print('-' * 30)
         print('OPÇÕES: ')
         print('1 - Em andamento')
         print('2 - Concluída')
-        st = int(input('Escolha uma opção: '))
+        while True:
+            st = input('Escolha uma opção: ')
+            if st.isnumeric():
+                st = int(st)
+                if st > 2 or st < 1:
+                    print(f'\033[31m({st}) não existe no menu de opções. Tente novamente.\033[m')
+                else:
+                    break
+            else:
+                print('\033[31mEscreva em forma numérica.\033[m')
+
         if st == 1:
             listataf[atua]['status'] = 'Em andamento'
         if st == 2:
