@@ -22,7 +22,7 @@ def inicio():
             if resp.isnumeric():
                 resp = int(resp)
                 if resp > 5 or resp < 1:
-                    print(f'\033[31m({resp}) não existe no menu de opções.\033[m')
+                    print(f'\033[31m({resp}) não existe no menu de opções. Tente novamente.\033[m')
                 elif resp == 2:
                     if len(listataf) == 0:
                         print('\033[31mVocê não tem nenhuma tarefa cadastrada. Tente novamente.\033[m')
@@ -117,25 +117,45 @@ def excluir():
         for c in range(0, len(listataf)):
             print(f'Tarefa {c}: {listataf[c]['tarefa']} | Status: {listataf[c]['status']}')
         print('-' * 30)
-        lixo = int(input('Deseja excluir qual tarefa? '))
+        while True:
+            lixo = input('Deseja excluir qual tarefa? ')
+            if lixo.isnumeric():
+                lixo = int(lixo)
+                if lixo > (len(listataf ) -1) or lixo < 0:
+                    print(f'\033[31mNão tem nenhuma tarefa com o número ({lixo}) cadastrada. Tente novamente.\033[m')
+                else:
+                    break
+            else:
+                print('\033[31mEscreva em forma numérica.\033[m')
         print(f'\033[31mA tarefa ({listataf[lixo]['tarefa']}) será excluída!\033[m')
-        cert = input('Tem certeza que deseja excluir essa tarefa? [S/N] ').upper()
-        if cert == 'S':
-            print(f'Excluindo tarefa...')
-            time.sleep(0.5)
-            del listataf[lixo]
-            print('\033[32mTarefa excluída com sucesso!\033[m')
-            print('-' * 30)
-            time.sleep(1)
+        while True:
+            cert = input('Tem certeza que deseja excluir essa tarefa? [S/N] ').upper()
+            if cert.isalpha():
+                cert = str(cert)
+                if cert == 'S':
+                    print(f'Excluindo tarefa...')
+                    time.sleep(0.5)
+                    del listataf[lixo]
+                    print('\033[32mTarefa excluída com sucesso!\033[m')
+                    print('-' * 30)
+                    time.sleep(1)
+                    limpatela()
+                    break
+                elif cert == 'N':
+                    exc = input('Deseja excluir alguma tarefa? [S/N] ').upper()
+                    if exc == 'N':
+                        break
+                    else:
+                        print('\033[33mEscolha novamente!\033[m')
+                        print('-' * 30)
+                        break
+                else:
+                    print('\033[31mResponda com "S" ou "N".\033[m')
+            else:
+                print('\033[31mResponda com "S" ou "N".\033[m')
+        if cert == 'S' or exc == 'N':
             limpatela()
             break
-        else:
-            exc = input('Deseja excluir alguma tarefa? [S/N] ').upper()
-            if exc == 'N':
-                break
-            else:
-                print('Escolha novamente!')
-                print('-' * 30)
 
 
 def visualizar():
@@ -145,7 +165,16 @@ def visualizar():
         print('2 - Visualizar todas as tarefas concluídas')
         print('3 - Visualizar todas as tarefas que não foram concluídas')
         print('4 - Visualizar todas as tarefas em andamento')
-        visu = int(input('Escolha: '))
+        while True:
+            visu = input('Escolha: ')
+            if visu.isnumeric():
+                visu = int(visu)
+                if visu > 4 or visu < 1:
+                    print(f'\033[31m({visu}) não existe no menu de opções.\033[m')
+                else:
+                    break
+            else:
+                print('\033[31mEscreva em forma numérica.\033[m')
         if visu == 1:
             for c in range(0, len(listataf)):
                 print(f'Tarefa {c}: {listataf[c]['tarefa']} | Status: {listataf[c]['status']}')
@@ -164,11 +193,22 @@ def visualizar():
             for c in range(0, len(listataf)):
                 if listataf[c]['status'] == 'Em andamento':
                     print(f'Tarefa {c}: {listataf[c]['tarefa']} | Status: {listataf[c]['status']}')
-        p = input('Deseja visualizar mais alguma tarefa? [S/N] ').upper()
+        while True:
+            p = input('Deseja visualizar mais alguma tarefa? [S/N] ').upper()
+            if p.isalpha():
+                p = str(p)
+                if p == 'N':
+                    print('\033[33mEncerrando visualização...\033[m')
+                    time.sleep(1)
+                    limpatela()
+                    break
+                elif p == 'S':
+                    break
+                else:
+                    print('\033[31mResponda com "S" ou "N".\033[m')
+            else:
+                print('\033[31mResponda com "S" ou "N".\033[m')
         if p == 'N':
-            print('\033[33mEncerrando visualização...\033[m')
-            time.sleep(1)
-            limpatela()
             break
 
 def sair():
