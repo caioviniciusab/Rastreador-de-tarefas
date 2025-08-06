@@ -13,4 +13,4 @@ Características do sistema:
 
 Ferramentas utilizadas: Python
 
-Status: Em andamento.
+Status: Concluído.
