@@ -1,6 +1,6 @@
 # Rastreador de tarefas
 
-Apendi a fazer esse projeto no curso em vídeo.
+Aprendi a fazer esse projeto no curso em vídeo.
 
 Características do sistema:
 
